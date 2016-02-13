@@ -1,34 +1,30 @@
 package org.usfirst.frc.team687.robot;
 
-import java.util.Scanner;
+/*
+ * testTBH2
+ * 
+ *@authors: Ronan Konishi, Isaac Addis, Tabio Pela
+ *
+ *@param: encoder ticks
+ *
+ *@description: TestTBH2 performs the TBH algorithm based on the encoder ticks it is given. 
+ */
 
 public class Master {
 	//Define variables
-	static Scanner scanner = new Scanner(System.in);
+	
+	//Scammer
+//	static Scanner scanner = new Scanner(System.in);
+	//TBH variable
 	static double m_TBH = 0.0;
 	static double last_encode = 0;
 	static double desired = 3600;
 	static double previousError = 0;
 	static double last_time = 0;
 	static double output = 0;
-	public static void main(String[] args) {
-		for(int i=0; i<100; i++){
-			double input = scanner.nextDouble();
-//			double input2 = scanner.nextDouble();
-			double finalValue = Master.testTBH2(input);
-			System.out.println("o2: " + finalValue);
-		}
-		
-	}
-	/*
-	 * testTBH2
-	 * 
-	 *@authors: Ronan Konishi, Isaac Addis, Tabio Pela
-	 *
-	 *@param: encoder ticks
-	 *
-	 *@description: TestTBH2 performs the TBH algorithm based on the encoder ticks it is given. 
-	 */
+	static double current_encode_global;
+	static double RPM_global;
+	
 	public static double testTBH2(double encode){
 //		double time = currentTime; (for testing)
 		
@@ -36,12 +32,15 @@ public class Master {
 		double gain = 1.0/400.0;
 		//Assign the argument to a variable called current_encode
 		double current_encode = encode;
+		current_encode_global = current_encode;
 		//Delta time (change in time in milliseconds)
 		double delta_time = (System.currentTimeMillis() - last_time)/ 60000; //change time in minutes
-    	double delta_encode = current_encode - last_encode;
+    	double delta_encode = current_encode - last_encode;//how can we calculate revolutions???
     	double actualrpm = (delta_encode / delta_time);
+    	RPM_global = actualrpm;
 		double error = desired - actualrpm;
 		double output =+ gain * error;
+		
 //For Testing:
 //		System.out.println("LastEncode " + last_encode);
 //		System.out.println("DeltaTime: " + delta_time);
